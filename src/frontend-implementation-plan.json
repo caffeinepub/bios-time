@@ -1,0 +1,339 @@
+{
+  "kind": "implementation_plan",
+  "version": "1.0",
+  "title": "BIOS-TIME ritual: three-screen Voile de Chair flow + Deep Liquid Aura theme + FR/EN localization",
+  "requirements": [
+    {
+      "id": "REQ-1",
+      "summary": "Add a dedicated BIOS-TIME three-screen ritual experience (Souffle → Bloom → Boussole) with clear in-app navigation entry and exit back to the normal shell.",
+      "acceptanceCriteria": [
+        "A user can start the BIOS-TIME ritual flow from the app UI without needing a deep link.",
+        "The flow includes exactly three distinct screens/states (Souffle, Bloom, Boussole) with transitions matching the described interactions (long-press and landscape/orientation trigger) and a way to return/exit back to the normal app shell."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/pages/BiosTimeRitualPage.tsx",
+          "operation": "create",
+          "description": "Create the BIOS-TIME ritual page that orchestrates the flow state machine (exactly three screens: Souffle, Bloom, Boussole), provides an explicit Exit/Back-to-app control, and wires in shared ritual controls (e.g., mute). Use shadcn/ui primitives (e.g., Button, Card) for consistent UI elements; verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/components/ritual-bios-time/BiosTimeRitualShell.tsx",
+          "operation": "create",
+          "description": "Create a ritual-only shell/layout component to scope the Deep Liquid Aura theme and shared UI chrome (header/exit, audio mute, fallback notices) without altering the existing AppShell parchment theme. Use shadcn/ui primitives where helpful; verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Register a new route for the BIOS-TIME ritual experience (single route that internally switches between Souffle/Bloom/Boussole states) and ensure route errors still use the existing RouteErrorComponent."
+        },
+        {
+          "path": "frontend/src/components/nav/PrimaryNav.tsx",
+          "operation": "modify",
+          "description": "Add a new primary navigation item that routes to the BIOS-TIME ritual experience. Use the existing shadcn/ui Button + lucide icons pattern; verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/pages/DashboardPage.tsx",
+          "operation": "modify",
+          "description": "Add a prominent entry point (e.g., a card or CTA button) that starts the BIOS-TIME ritual flow from the dashboard without deep links. Use existing shadcn/ui Card/Button patterns; verify the component's usage instructions before implementing."
+        }
+      ]
+    },
+    {
+      "id": "REQ-2",
+      "summary": "Implement the ritual-only Deep Liquid Aura look: animated living gradient background (time-of-day palette) + subtle glassmorphism panels + airy thin typography, scoped to ritual screens only.",
+      "acceptanceCriteria": [
+        "Within the BIOS-TIME ritual screens, the background visibly animates over time and the palette changes across day phases (dawn/day/dusk/night).",
+        "Ritual UI surfaces use frosted-glass styling (semi-transparent fill + blur) and a cohesive thin, airy typographic style.",
+        "Non-ritual pages (e.g., Dashboard/Settings/True Time) retain their current parchment styling."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/index.css",
+          "operation": "modify",
+          "description": "Add ritual-scoped CSS classes (applied only within the BIOS-TIME ritual shell) for: animated multi-stop gradient background, day-phase palette variants, glassmorphism surface styles (blur + translucent fill), and airy typography (thin weight + letter spacing). Ensure existing parchment body background remains unchanged for non-ritual pages."
+        },
+        {
+          "path": "frontend/tailwind.config.js",
+          "operation": "modify",
+          "description": "Extend Tailwind with ritual-specific keyframes/animations (e.g., slow gradient drift, subtle shimmer) and any needed utilities for the Deep Liquid Aura theme, keeping usage scoped to ritual classes/components."
+        },
+        {
+          "path": "frontend/src/hooks/useDayPhasePalette.ts",
+          "operation": "create",
+          "description": "Create a hook that maps local time to a day phase (dawn/day/dusk/night) and returns palette tokens used by the ritual animated gradient and UI accents (no external services)."
+        },
+        {
+          "path": "frontend/src/components/ritual-bios-time/BiosTimeRitualShell.tsx",
+          "operation": "modify",
+          "description": "Apply the Deep Liquid Aura animated background and glass surface wrappers consistently across all three ritual screens, using day-phase palette values from the time-of-day hook. Use shadcn/ui primitives for panels/controls where appropriate; verify the component's usage instructions before implementing."
+        }
+      ]
+    },
+    {
+      "id": "REQ-3",
+      "summary": "Implement Screen 1 (Souffle / Celestial Oculus): centered pulsing Oculus (~7.83 Hz), orbiting Sun/Moon indicators, status text, and long-press to transition to Screen 2.",
+      "acceptanceCriteria": [
+        "The Oculus is visually centered and continuously pulsing; the pulse rate is approximately 7.83 cycles per second (within reasonable browser timing tolerance).",
+        "Two distinct orbiting indicators (Sun = circle, Moon = crescent) rotate around the Oculus at a slow, steady pace.",
+        "A long-press gesture on the Oculus transitions to Screen 2; short taps do not trigger the transition.",
+        "A single-line status text is displayed under the Oculus and updates based on the current ritual state (at minimum: an ‘aligned / recovery / alert’ style state)."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/ritual-bios-time/screens/SouffleScreen.tsx",
+          "operation": "create",
+          "description": "Create the Souffle (Celestial Oculus) screen component with a centered Oculus visual, ~7.83 Hz pulse animation, orbiting Sun/Moon indicators, and localized minimal status text. Use generated glyph assets for Sun/Moon where appropriate; verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/hooks/useLongPress.ts",
+          "operation": "create",
+          "description": "Create a reusable long-press hook (pointer/touch-safe) that triggers only after a press duration threshold and does not fire on short taps; used by the Oculus to advance to Bloom."
+        },
+        {
+          "path": "frontend/src/pages/BiosTimeRitualPage.tsx",
+          "operation": "modify",
+          "description": "Wire the Souffle screen as the first state in the ritual flow and connect its long-press completion to transition into the Bloom screen state."
+        }
+      ]
+    },
+    {
+      "id": "REQ-4",
+      "summary": "Implement Screen 2 (Bloom / Data Blossom): metamorphosis animation from Screen 1, three orbiting petal panels, drag-to-petal interaction, and release-to-absorb close behavior.",
+      "acceptanceCriteria": [
+        "Entering Screen 2 from Screen 1 plays a clear metamorphosis animation (Oculus transforms into a glass-like receptacle).",
+        "Three distinct petal panels orbit or hover around the center and display readable titles/values (in the currently selected language).",
+        "Dragging toward a petal produces an obvious interactive response (e.g., petal highlight/selection and parameter change).",
+        "On release, petals animate inward (‘absorb’) and the UI returns to the resting state (either Screen 2 resting or back to Screen 1, as designed), with no stuck/half-open states."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/ritual-bios-time/screens/BloomScreen.tsx",
+          "operation": "create",
+          "description": "Create the Bloom (Data Blossom) screen component: handle Souffle→Bloom metamorphosis animation, render three localized petal panels (Sky/Lunar, Body/Biometrics, Earth/Environment), implement drag-to-select interaction with obvious feedback, and on release animate petals absorbing back into the center with a stable resting state. Use shadcn/ui primitives for petal panel content surfaces where appropriate; verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/hooks/usePointerDragVector.ts",
+          "operation": "create",
+          "description": "Create a hook that tracks pointer/touch drag vectors (start, current, delta, normalized direction) and supports clean cancel/end handling to avoid stuck states; used by Bloom interactions."
+        },
+        {
+          "path": "frontend/src/pages/BiosTimeRitualPage.tsx",
+          "operation": "modify",
+          "description": "Wire the Bloom screen as the second state in the flow and ensure transitions in/out are coordinated with the Souffle long-press and Bloom release behavior."
+        }
+      ]
+    },
+    {
+      "id": "REQ-5",
+      "summary": "Add web-simulated sensory feedback for Bloom: hang-drum-like harmonic pad audio while open + simulated haptics via Vibration API with fallback + visible mute/stop control.",
+      "acceptanceCriteria": [
+        "When Screen 2 opens, audio starts (subject to browser gesture/autoplay rules) and stops when the bloom closes.",
+        "If `navigator.vibrate` is supported, the app uses vibration patterns on open/close; if not supported, the app does not error and still provides visual feedback.",
+        "The ritual experience includes a visible mute/stop control that reliably silences ritual audio."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/hooks/useRitualAudio.ts",
+          "operation": "create",
+          "description": "Implement a Web Audio-based ritual audio controller suitable for a hang-drum-like harmonic pad (procedural synthesis; no external services), with start/stop/mute and safe handling of autoplay/permission failures."
+        },
+        {
+          "path": "frontend/src/hooks/useVibrationFeedback.ts",
+          "operation": "create",
+          "description": "Create a vibration helper hook that uses navigator.vibrate when available (open/close patterns) and otherwise becomes a no-op, never throwing errors."
+        },
+        {
+          "path": "frontend/src/components/ritual-bios-time/BiosTimeRitualShell.tsx",
+          "operation": "modify",
+          "description": "Add a persistent, obvious ritual audio mute/stop control (visible across ritual screens) and connect it to the ritual audio controller. Use shadcn/ui Button/Switch where appropriate; verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/components/ritual-bios-time/screens/BloomScreen.tsx",
+          "operation": "modify",
+          "description": "Start Bloom audio and haptic simulation on open (subject to gesture rules) and stop them on close/release. Ensure behavior is resilient to unsupported vibration/audio and surfaces non-blocking localized notices when needed."
+        }
+      ]
+    },
+    {
+      "id": "REQ-6",
+      "summary": "Implement Screen 3 (Boussole Sonore) triggered by landscape orientation (with manual fallback): transparent augmented mode with luminous ring, particle ray driven by device direction or simulated control, and sweet-spot lock effect.",
+      "acceptanceCriteria": [
+        "Landscape orientation triggers Screen 3 automatically on compatible devices/browsers; a visible manual fallback exists for desktop or unsupported orientation APIs.",
+        "Screen 3 visually differs from Screens 1/2 with a ‘more transparent’ UI and clearly shows the ring and ray visuals.",
+        "Alignment is computed using device orientation when available; otherwise a simulated control (e.g., on-screen dial) drives the direction.",
+        "When alignment enters a tolerance window (‘sweet spot’), a clear lock state occurs (e.g., intensified white pillar/ray + distinct animation) and unlocks when leaving the window."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/ritual-bios-time/screens/BoussoleScreen.tsx",
+          "operation": "create",
+          "description": "Create the Boussole (Compass) screen component with a more transparent UI, luminous ring visual, particle ray visualization, alignment detection + lock/unlock effects, and a simulated direction control fallback for non-orientation environments. Use the generated particle sprite asset for the ray/particles; verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/hooks/useOrientationOrSimulatedHeading.ts",
+          "operation": "create",
+          "description": "Create a hook that reads device orientation/heading when available and otherwise exposes a simulated heading value (driven by on-screen control) for desktop/unsupported browsers."
+        },
+        {
+          "path": "frontend/src/hooks/useLandscapeTrigger.ts",
+          "operation": "create",
+          "description": "Create a hook that detects landscape mode (via matchMedia/orientation APIs where available) and provides a stable signal used to auto-enter/exit compass mode, plus a manual override flag for fallback."
+        },
+        {
+          "path": "frontend/src/pages/BiosTimeRitualPage.tsx",
+          "operation": "modify",
+          "description": "Wire Boussole as the third ritual state: auto-enter on landscape signal when available, provide a visible 'Enter Compass Mode' manual fallback, and preserve an Exit path back to the normal app shell."
+        }
+      ]
+    },
+    {
+      "id": "REQ-7",
+      "summary": "Add web-simulated 3D audio for Boussole using stereo panning and intensity changes based on alignment, with consistent mute/stop and a non-blocking 'interact to enable sound' notice when needed.",
+      "acceptanceCriteria": [
+        "Audio intensity/clarity changes continuously as alignment changes, and stereo balance shifts toward center when near alignment.",
+        "On lock, audio becomes centered (no left/right drift) and remains stable until unlock.",
+        "If audio cannot start due to browser restrictions, the UI displays a non-blocking, English message indicating the user must interact to enable sound."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/hooks/useCompassSpatialAudio.ts",
+          "operation": "create",
+          "description": "Implement a Web Audio controller for Boussole: stereo panning (left/right) based on heading vs target, intensity/clarity based on alignment proximity, and stable centered sound on lock, integrated with the global ritual mute/stop state."
+        },
+        {
+          "path": "frontend/src/components/ritual-bios-time/screens/BoussoleScreen.tsx",
+          "operation": "modify",
+          "description": "Connect alignment/lock state to the compass spatial audio controller (pan/strength/center-on-lock) and show a translated non-blocking notice when sound cannot start until user interaction."
+        },
+        {
+          "path": "frontend/src/components/ritual-bios-time/BiosTimeRitualShell.tsx",
+          "operation": "modify",
+          "description": "Ensure the ritual mute/stop control affects Boussole audio consistently (including locked state), and that mute state is reflected in the UI. Use shadcn/ui controls where appropriate; verify the component's usage instructions before implementing."
+        }
+      ]
+    },
+    {
+      "id": "REQ-8",
+      "summary": "Add French localization for the ritual and ensure automatic language detection on first visit with manual switching via Settings; saved preference must override detection.",
+      "acceptanceCriteria": [
+        "If no UI language is saved, the app selects French when the browser language indicates French (e.g., `fr`, `fr-FR`) and otherwise selects English.",
+        "If a UI language is saved in localStorage, it overrides detection on subsequent loads.",
+        "All new ritual UI strings are present in both `en` and `fr` dictionaries and render correctly when switching languages.",
+        "Settings language selector continues to work and updates the ritual screens immediately."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/state/preferences/uiLanguage.ts",
+          "operation": "modify",
+          "description": "Update UI language preference logic to support first-visit auto-detection (French when browser language is French) while never overriding an explicitly saved language preference."
+        },
+        {
+          "path": "frontend/src/state/i18n/I18nProvider.tsx",
+          "operation": "modify",
+          "description": "Initialize i18n language using the updated preference/detection behavior (saved preference wins; otherwise detect) and ensure switching via Settings updates all ritual screens immediately."
+        },
+        {
+          "path": "frontend/src/state/i18n/strings.ts",
+          "operation": "modify",
+          "description": "Add all new BIOS-TIME ritual translation keys (screen titles, status line variants, controls like Exit/Mute/Enter Compass Mode, petal labels/values, API fallback notices) with both English and French translations."
+        },
+        {
+          "path": "frontend/src/pages/SettingsPage.tsx",
+          "operation": "modify",
+          "description": "Localize any newly-touched Settings strings related to language switching (e.g., labels/descriptions introduced/changed during this build) and ensure the selector continues to update the ritual UI immediately. Use existing shadcn/ui Select patterns; verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/components/nav/PrimaryNav.tsx",
+          "operation": "modify",
+          "description": "Add a localized label for the new BIOS-TIME ritual nav item using i18n keys (EN/FR). Use the existing shadcn/ui Button pattern; verify the component's usage instructions before implementing."
+        }
+      ]
+    },
+    {
+      "id": "REQ-9",
+      "summary": "Add robust error handling so advanced API failures (audio, orientation, vibration) degrade gracefully with translated, non-blocking notices and alternative interactions.",
+      "acceptanceCriteria": [
+        "Disabling audio permissions, blocking autoplay, or missing orientation/vibration APIs does not crash the app.",
+        "When an API is missing/blocked, the UI shows a translated, non-blocking notice and provides an alternative interaction path (e.g., manual compass control, ‘Tap to enable audio’)."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/ritual-bios-time/RitualNotices.tsx",
+          "operation": "create",
+          "description": "Create a small ritual-only notice renderer that uses the existing NonBlockingErrorAlert component to show translated, non-blocking API availability/permission notices (audio/orientation/vibration) within the ritual UI. Use shadcn/ui Alert patterns indirectly through NonBlockingErrorAlert; verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/components/ritual-bios-time/BiosTimeRitualShell.tsx",
+          "operation": "modify",
+          "description": "Centralize advanced API guards and surface non-blocking, localized notices (e.g., 'Tap to enable audio', 'Device orientation unavailable; using simulator') without crashing; ensure manual fallback actions are discoverable in the UI."
+        },
+        {
+          "path": "frontend/src/components/ritual-bios-time/screens/BloomScreen.tsx",
+          "operation": "modify",
+          "description": "Wrap audio context start/stop and vibration calls with defensive checks and error catching; route any failure into the ritual notice system while keeping Bloom interactions functional."
+        },
+        {
+          "path": "frontend/src/components/ritual-bios-time/screens/BoussoleScreen.tsx",
+          "operation": "modify",
+          "description": "Handle missing/blocked orientation and audio capabilities gracefully by switching to the simulated heading control and showing translated non-blocking notices; ensure no uncaught exceptions from event listeners or Web Audio nodes."
+        }
+      ]
+    },
+    {
+      "id": "REQ-10",
+      "summary": "Add required static ritual visual assets under frontend/public/assets/generated and use them in the ritual UI without affecting the rest of the app.",
+      "acceptanceCriteria": [
+        "Generated assets exist under `frontend/public/assets/generated` and are referenced directly by the frontend.",
+        "Ritual UI uses the generated assets visually (not just included unused).",
+        "The rest of the app continues to load its existing background asset without regression."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/public/assets/generated/glass-fractal-overlay.dim_1024x1024.png",
+          "operation": "create",
+          "description": "Add the required generated asset file at frontend/public/assets/generated/glass-fractal-overlay.dim_1024x1024.png and ensure it is used as a subtle overlay on ritual glass surfaces (no backend image routing)."
+        },
+        {
+          "path": "frontend/public/assets/generated/particle-sprite.dim_256x256.png",
+          "operation": "create",
+          "description": "Add the required generated asset file at frontend/public/assets/generated/particle-sprite.dim_256x256.png and use it for Boussole particle/ray rendering."
+        },
+        {
+          "path": "frontend/public/assets/generated/sun-glyph.dim_256x256.png",
+          "operation": "create",
+          "description": "Add the required generated asset file at frontend/public/assets/generated/sun-glyph.dim_256x256.png and use it for the Souffle orbiting Sun indicator (or as a UI accent)."
+        },
+        {
+          "path": "frontend/public/assets/generated/moon-glyph.dim_256x256.png",
+          "operation": "create",
+          "description": "Add the required generated asset file at frontend/public/assets/generated/moon-glyph.dim_256x256.png and use it for the Souffle orbiting Moon indicator (or as a UI accent)."
+        },
+        {
+          "path": "frontend/public/assets/generated/tide-icon.dim_256x256.png",
+          "operation": "create",
+          "description": "Add the required generated asset file at frontend/public/assets/generated/tide-icon.dim_256x256.png and use it within the Bloom petals (e.g., Sky/Lunar influence icon) or ritual UI controls."
+        },
+        {
+          "path": "frontend/public/assets/generated/shield-cracked-icon.dim_256x256.png",
+          "operation": "create",
+          "description": "Add the required generated asset file at frontend/public/assets/generated/shield-cracked-icon.dim_256x256.png and use it as a ritual safety/alert/fallback emblem where appropriate."
+        },
+        {
+          "path": "frontend/src/components/ritual-bios-time/screens/SouffleScreen.tsx",
+          "operation": "modify",
+          "description": "Reference and render the generated glyph assets directly from: frontend/public/assets/generated/sun-glyph.dim_256x256.png and frontend/public/assets/generated/moon-glyph.dim_256x256.png (no backend image routing)."
+        },
+        {
+          "path": "frontend/src/components/ritual-bios-time/screens/BoussoleScreen.tsx",
+          "operation": "modify",
+          "description": "Reference and render the particle sprite directly from: frontend/public/assets/generated/particle-sprite.dim_256x256.png to drive the ray/particle visuals."
+        },
+        {
+          "path": "frontend/src/components/ritual-bios-time/screens/BloomScreen.tsx",
+          "operation": "modify",
+          "description": "Apply the fractal glass texture overlay directly from: frontend/public/assets/generated/glass-fractal-overlay.dim_1024x1024.png on Bloom glass surfaces, and use: frontend/public/assets/generated/tide-icon.dim_256x256.png and frontend/public/assets/generated/shield-cracked-icon.dim_256x256.png as petal/emblem accents."
+        }
+      ]
+    }
+  ]
+}

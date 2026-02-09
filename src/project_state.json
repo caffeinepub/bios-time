@@ -1,0 +1,134 @@
+{
+  "schemaVersion": "1.0.0",
+  "projectStateVersion": 3,
+  "summary": "BIOS-TIME: build a first functional, high-fidelity web prototype (React + Three.js) of the ‘Voile de Chair’ UI with a three-screen ritual flow (Souffle, Bloom, Boussole), including simulations for complex interactions (haptics/gyroscope/spatial audio) and full French localization with automatic detection plus manual language switching.",
+  "architectural_notes": [
+    "Target platform: web app built with React + Three.js.",
+    "Complex device interactions (haptics, gyroscope/orientation, 3D/spatial audio) will be implemented as web simulations/alternatives.",
+    "UI fidelity target: maximal (as close as feasible to described ritual aesthetics within web constraints).",
+    "Localization requirement: full French coverage when French is selected/detected; include auto-detect plus manual language switch."
+  ],
+  "known_issues": [
+    "Prior build attempt failed due to an internal LLM error (build did not complete)."
+  ],
+  "isFixRequest": false,
+  "imageRequirements": "## Required Images\n- Seamless fractal frosted-glass texture overlay (glass-fractal-overlay.dim_1024x1024.png)\n- Soft luminous particle sprite (particle-sprite.dim_256x256.png)\n- Minimal sun glyph icon (sun-glyph.dim_256x256.png)\n- Minimal moon crescent glyph icon (moon-glyph.dim_256x256.png)\n- Stylized tide icon (tide-icon.dim_256x256.png)\n- Cracked shield icon (shield-cracked-icon.dim_256x256.png)",
+  "existing_features": [
+    {
+      "id": "feature-create-a-new-dedicated-bios-time-ritual-experience-with-a-three-screen-flow-souffle-bloom-boussole-implemented-in-the-frontend-and-reachable-via-a-clear-navigation-entry-new-primary-nav-item-and-or-prominent-entry-point-on-the-dashboard",
+      "title": "Create a new, dedicated BIOS-TIME ritual experience with a three-screen flow (Souffle → Bloom → Boussole) implemented in the frontend and reachable via a clear navigation entry (new primary nav item and/or prominent entry point on the Dashboard).",
+      "reqIds": [
+        "REQ-1"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-the-deep-liquid-aura-global-look-feel-for-the-bios-time-ritual-screens-an-animated-living-gradient-background-that-continuously-evolves-and-changes-palette-based-on-local-time-of-day-subtle-glassmorphism-panels-frosted-glass-with-light-blur-and-elegant-thin-typography-with-generous-letter-spacing-apply-this-theme-consistently-across-the-three-ritual-screens-without-altering-the-existing-parchment-theme-used-by-the-rest-of-the-app",
+      "title": "Implement the ‘Deep Liquid Aura’ global look & feel for the BIOS-TIME ritual screens: an animated, living gradient background that continuously evolves and changes palette based on local time-of-day; subtle glassmorphism panels (frosted glass with light blur) and elegant thin typography with generous letter spacing. Apply this theme consistently across the three ritual screens without altering the existing parchment theme used by the rest of the app.",
+      "reqIds": [
+        "REQ-2"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-screen-1-souffle-celestial-oculus-render-a-central-organic-energy-sphere-oculus-that-pulses-at-7-83-hz-show-minimal-status-text-beneath-it-render-sun-and-moon-indicators-that-slowly-orbit-around-the-oculus-add-a-long-press-interaction-on-the-oculus-that-transitions-into-screen-2",
+      "title": "Implement Screen 1 (‘Souffle / Celestial Oculus’): render a central organic energy sphere (‘Oculus’) that pulses at ~7.83 Hz; show minimal status text beneath it; render Sun and Moon indicators that slowly orbit around the Oculus. Add a long-press interaction on the Oculus that transitions into Screen 2.",
+      "reqIds": [
+        "REQ-3"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-screen-2-bloom-data-blossom-transition-animation-from-screen-1-where-the-oculus-sinks-and-becomes-a-frosted-glass-receptacle-spawn-three-orbiting-petal-panels-sky-lunar-influence-body-biometrics-earth-environment-implement-a-drag-interaction-that-lets-the-user-pull-toward-a-petal-releasing-closes-the-bloom-and-re-absorbs-petals-into-the-oculus",
+      "title": "Implement Screen 2 (‘Bloom / Data Blossom’): transition animation from Screen 1 where the Oculus ‘sinks’ and becomes a frosted glass receptacle; spawn three orbiting ‘petal’ panels (Sky/Lunar influence, Body/Biometrics, Earth/Environment). Implement a drag interaction that lets the user pull toward a petal; releasing closes the bloom and re-absorbs petals into the Oculus.",
+      "reqIds": [
+        "REQ-4"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-web-simulated-sensory-feedback-for-screen-2-a-an-audible-hang-drum-like-harmonic-pad-while-the-bloom-is-open-and-b-simulated-haptics-using-the-vibration-api-when-available-with-graceful-fallback-when-not-supported-ensure-there-is-an-obvious-on-screen-control-to-mute-stop-ritual-audio",
+      "title": "Add web-simulated sensory feedback for Screen 2: (a) an audible hang-drum-like harmonic pad while the bloom is open and (b) simulated ‘haptics’ using the Vibration API when available, with graceful fallback when not supported. Ensure there is an obvious on-screen control to mute/stop ritual audio.",
+      "reqIds": [
+        "REQ-5"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-screen-3-boussole-sonore-alignment-ritual-triggered-by-landscape-orientation-when-the-device-is-rotated-to-landscape-or-a-manual-enter-compass-mode-fallback-control-is-used-render-a-transparent-augmented-mode-with-a-luminous-ring-stretched-oculus-a-particle-ray-of-life-pointing-based-on-simulated-device-direction-and-a-sweet-spot-lock-effect-when-aligned-within-a-reasonable-tolerance",
+      "title": "Implement Screen 3 (‘Boussole Sonore / Alignment Ritual’) triggered by landscape orientation: when the device is rotated to landscape (or a manual ‘Enter Compass Mode’ fallback control is used), render a ‘transparent augmented’ mode with a luminous ring (stretched Oculus), a particle ‘ray of life’ pointing based on simulated device direction, and a ‘sweet spot’ lock effect when aligned within a reasonable tolerance.",
+      "reqIds": [
+        "REQ-6"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-web-simulated-3d-audio-feedback-for-screen-3-using-web-audio-stereo-panning-no-external-services-as-the-user-approaches-alignment-the-sound-becomes-clearer-stronger-and-pans-toward-center-when-locked-the-sound-becomes-centered-and-stable-provide-mute-stop-behavior-consistent-with-the-rest-of-the-ritual-experience",
+      "title": "Add web-simulated ‘3D audio’ feedback for Screen 3 using Web Audio stereo panning (no external services): as the user approaches alignment, the sound becomes clearer/stronger and pans toward center; when locked, the sound becomes centered and stable. Provide mute/stop behavior consistent with the rest of the ritual experience.",
+      "reqIds": [
+        "REQ-7"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-french-localization-across-the-bios-time-ritual-experience-and-ensure-the-app-supports-both-a-automatic-language-detection-on-first-visit-and-b-manual-language-switching-via-settings-all-user-facing-text-introduced-or-modified-for-this-build-must-have-english-and-french-translations-and-the-default-language-should-be-chosen-by-detection-unless-a-saved-preference-exists",
+      "title": "Implement French localization across the BIOS-TIME ritual experience and ensure the app supports both (a) automatic language detection on first visit and (b) manual language switching via Settings. All user-facing text introduced or modified for this build must have English and French translations, and the default language should be chosen by detection unless a saved preference exists.",
+      "reqIds": [
+        "REQ-8"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-ensure-the-bios-time-ritual-screens-are-implemented-with-robust-error-handling-so-that-failures-in-advanced-apis-audio-context-device-orientation-vibration-degrade-gracefully-and-never-crash-the-app-show-non-blocking-user-readable-fallback-messaging-in-english-and-translated-to-french-when-an-api-is-unavailable",
+      "title": "Ensure the BIOS-TIME ritual screens are implemented with robust error handling so that failures in advanced APIs (audio context, device orientation, vibration) degrade gracefully and never crash the app; show non-blocking, user-readable fallback messaging in English (and translated to French) when an API is unavailable.",
+      "reqIds": [
+        "REQ-9"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-required-static-visual-assets-for-the-ritual-theme-icons-textures-and-render-them-from-frontend-public-assets-generated-no-backend-image-routing-use-these-assets-in-the-ritual-ui-where-appropriate-e-g-glass-texture-overlay-stylized-sun-moon-glyphs-petal-icons",
+      "title": "Add required static visual assets for the ritual theme (icons/textures) and render them from `frontend/public/assets/generated` (no backend image routing). Use these assets in the ritual UI where appropriate (e.g., glass texture overlay, stylized sun/moon glyphs, petal icons).",
+      "reqIds": [
+        "REQ-10"
+      ],
+      "version": 1
+    }
+  ],
+  "new_feature_requests": [
+    {
+      "id": "AR-1",
+      "summary": "Implement full French localization across all screens/content, with automatic language detection and manual language switch",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-2",
+      "summary": "Build high-fidelity ‘Deep Liquid Aura’ look & feel (animated time/season-based gradient background, subtle glassmorphism panels, elegant thin typography)",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-3",
+      "summary": "Implement Screen 1 ‘Le Souffle’ (central pulsing Oculus at 7.83Hz, minimal status text, Sun/Moon orbital indicators, long-press to transition)",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-4",
+      "summary": "Implement Screen 2 ‘Le Bloom’ (metamorphosis animation, 3 orbiting data petals, drag interaction, open/close effects) with web-simulated audio/haptics",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-5",
+      "summary": "Implement Screen 3 ‘La Boussole Sonore’ (landscape mode, compass-like alignment ritual) with web-simulated gyroscope/orientation + spatial audio feedback and ‘sweet spot’ lock effects",
+      "reqIds": [],
+      "status": "pending"
+    }
+  ],
+  "gameProjectType": "3d",
+  "projectName": "BIOS-TIME",
+  "clarification_mode": "instant",
+  "clarification_rounds": 0
+}

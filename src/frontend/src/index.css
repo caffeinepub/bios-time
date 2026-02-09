@@ -1,0 +1,279 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    :root {
+        --radius: 0.625rem;
+        
+        /* Warm parchment palette */
+        --background: 0.95 0.02 45;
+        --foreground: 0.25 0.04 35;
+        --card: 0.98 0.01 45;
+        --card-foreground: 0.25 0.04 35;
+        --popover: 0.98 0.01 45;
+        --popover-foreground: 0.25 0.04 35;
+        
+        /* Amber/gold accents for action phase */
+        --primary: 0.55 0.15 45;
+        --primary-foreground: 0.98 0.01 45;
+        
+        /* Muted warm tones */
+        --secondary: 0.88 0.02 45;
+        --secondary-foreground: 0.35 0.04 35;
+        --muted: 0.90 0.02 45;
+        --muted-foreground: 0.50 0.03 35;
+        --accent: 0.85 0.03 45;
+        --accent-foreground: 0.30 0.04 35;
+        
+        /* Destructive kept subtle */
+        --destructive: 0.55 0.20 25;
+        --destructive-foreground: 0.98 0.01 45;
+        
+        /* Borders and inputs */
+        --border: 0.75 0.03 40;
+        --input: 0.75 0.03 40;
+        --ring: 0.55 0.15 45;
+        
+        /* Chart colors with warm palette */
+        --chart-1: 0.60 0.18 45;
+        --chart-2: 0.55 0.12 120;
+        --chart-3: 0.45 0.10 260;
+        --chart-4: 0.65 0.15 30;
+        --chart-5: 0.70 0.14 50;
+    }
+
+    .dark {
+        /* Dark mode with deep indigo for night/recovery */
+        --background: 0.20 0.03 260;
+        --foreground: 0.92 0.02 45;
+        --card: 0.25 0.04 260;
+        --card-foreground: 0.92 0.02 45;
+        --popover: 0.22 0.04 260;
+        --popover-foreground: 0.92 0.02 45;
+        
+        /* Amber remains for action */
+        --primary: 0.65 0.15 45;
+        --primary-foreground: 0.20 0.03 260;
+        
+        --secondary: 0.30 0.04 260;
+        --secondary-foreground: 0.92 0.02 45;
+        --muted: 0.28 0.04 260;
+        --muted-foreground: 0.65 0.03 45;
+        --accent: 0.35 0.05 260;
+        --accent-foreground: 0.92 0.02 45;
+        
+        --destructive: 0.50 0.22 25;
+        --destructive-foreground: 0.20 0.03 260;
+        
+        --border: 0.35 0.04 260;
+        --input: 0.35 0.04 260;
+        --ring: 0.55 0.12 45;
+        
+        --chart-1: 0.55 0.18 260;
+        --chart-2: 0.60 0.15 120;
+        --chart-3: 0.70 0.14 45;
+        --chart-4: 0.50 0.20 300;
+        --chart-5: 0.58 0.18 30;
+    }
+
+    * {
+        @apply border-border;
+    }
+    
+    body {
+        @apply bg-background text-foreground;
+        font-family: 'Georgia', 'Times New Roman', serif;
+    }
+    
+    body:not(.ritual-active) {
+        background-image: url('/assets/generated/parchment-bg.dim_1920x1080.png');
+        background-size: cover;
+        background-attachment: fixed;
+        background-position: center;
+    }
+    
+    h1, h2, h3, h4, h5, h6 {
+        font-family: 'Georgia', 'Palatino', serif;
+    }
+}
+
+.bg-parchment {
+    background-color: oklch(var(--background));
+}
+
+/* Ritual-specific styles */
+.ritual-shell {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    letter-spacing: 0.02em;
+}
+
+.ritual-gradient-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        135deg,
+        transparent 0%,
+        rgba(255, 255, 255, 0.03) 50%,
+        transparent 100%
+    );
+    animation: ritual-gradient-drift 20s ease-in-out infinite;
+    pointer-events: none;
+}
+
+@keyframes ritual-gradient-drift {
+    0%, 100% {
+        transform: translateX(0) translateY(0);
+        opacity: 0.5;
+    }
+    50% {
+        transform: translateX(2%) translateY(2%);
+        opacity: 0.7;
+    }
+}
+
+.ritual-content-wrapper {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.ritual-screen {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.ritual-glass-button {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: rgba(255, 255, 255, 0.95);
+    font-weight: 300;
+    letter-spacing: 0.05em;
+    transition: all 0.3s ease;
+}
+
+.ritual-glass-button:hover {
+    background: rgba(255, 255, 255, 0.15);
+    border-color: rgba(255, 255, 255, 0.3);
+}
+
+.ritual-glass-panel {
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 16px;
+    color: rgba(255, 255, 255, 0.95);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+.ritual-status-text {
+    font-size: 1.25rem;
+    font-weight: 300;
+    letter-spacing: 0.1em;
+    color: rgba(255, 255, 255, 0.95);
+    text-align: center;
+}
+
+.ritual-hint-text {
+    font-size: 0.875rem;
+    font-weight: 300;
+    letter-spacing: 0.05em;
+    color: rgba(255, 255, 255, 0.7);
+    text-align: center;
+}
+
+/* Souffle screen */
+.souffle-screen canvas {
+    filter: drop-shadow(0 0 40px rgba(255, 255, 255, 0.3));
+}
+
+/* Bloom screen */
+.ritual-oculus-receptacle {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(20px);
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    z-index: 10;
+}
+
+.ritual-oculus-receptacle.open {
+    transform: scale(0.8);
+    opacity: 0.6;
+}
+
+.ritual-oculus-core {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.3), transparent);
+    animation: ritual-pulse 1.28s ease-in-out infinite;
+}
+
+@keyframes ritual-pulse {
+    0%, 100% {
+        transform: scale(1);
+        opacity: 0.8;
+    }
+    50% {
+        transform: scale(1.1);
+        opacity: 1;
+    }
+}
+
+.ritual-petals-container {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+.ritual-petal {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform-origin: center;
+    opacity: 0;
+    transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.ritual-petals-container.open .ritual-petal {
+    opacity: 1;
+}
+
+.ritual-petal.selected {
+    transform: scale(1.1) !important;
+}
+
+.ritual-petal-title {
+    font-size: 0.875rem;
+    font-weight: 400;
+    letter-spacing: 0.05em;
+    margin-bottom: 0.25rem;
+    text-align: center;
+}
+
+.ritual-petal-value {
+    font-size: 0.75rem;
+    font-weight: 300;
+    opacity: 0.8;
+    text-align: center;
+}
+
+/* Boussole screen */
+.boussole-screen canvas {
+    filter: drop-shadow(0 0 60px rgba(255, 255, 255, 0.4));
+}

@@ -1,0 +1,101 @@
+{
+  "kind": "spec_vs_diff_report",
+  "version": "1.0",
+  "generatedAt": "2026-02-09T06:45:10.097Z",
+  "summary": "Diff adds a new BIOS-TIME ritual route/page with three screens (Souffle/Bloom/Boussole), theme-scoped styling, time-of-day palettes, long-press + landscape triggers, simulated audio/haptics hooks, and a new primary nav item. However, several acceptance-critical behaviors are either not wired up (mute→audio, drag tracking), missing required fallback/UI notices (esp. Screen 3 audio restrictions and orientation simulation), new non-ritual text is left unlocalized, and required generated static assets are referenced but not shown as added under the mandated public assets path.",
+  "missing_requirements": [
+    {
+      "id": "REQ-4",
+      "requirement": "Drag interaction on Bloom screen must produce an obvious interactive response (petal highlight/selection and parameter change).",
+      "reason": "BloomScreen wires pointer handlers but does not call the hook’s drag update function; handlePointerMove is empty, so drag direction/selection likely never updates during movement (only start/end).",
+      "evidence": [
+        "frontend/src/components/ritual-bios-time/screens/BloomScreen.tsx",
+        "frontend/src/hooks/usePointerDragVector.ts"
+      ]
+    },
+    {
+      "id": "REQ-5",
+      "requirement": "Visible mute/stop control must reliably silence ritual audio (Bloom audio) and audio must stop when bloom closes.",
+      "reason": "A mute button exists in BiosTimeRitualShell, but the mute state is not connected to useRitualAudio (or any audio hook). Bloom audio starts/stops based on isOpen/unmount, but there is no wiring to the shell mute toggle to actually silence playback while remaining in Screen 2.",
+      "evidence": [
+        "frontend/src/components/ritual-bios-time/BiosTimeRitualShell.tsx",
+        "frontend/src/components/ritual-bios-time/screens/BloomScreen.tsx",
+        "frontend/src/hooks/useRitualAudio.ts"
+      ]
+    },
+    {
+      "id": "REQ-6",
+      "requirement": "When device orientation APIs are unavailable, show a translated, non-blocking notice and provide an alternative interaction path (manual compass control).",
+      "reason": "A simulated-heading fallback is implemented, and a translation key exists for an orientation-simulated notice, but no notice rendering is evidenced in BoussoleScreen (the component imports RitualNotices but the shown portion does not add notices when isSimulated is true).",
+      "evidence": [
+        "frontend/src/components/ritual-bios-time/screens/BoussoleScreen.tsx",
+        "frontend/src/hooks/useOrientationOrSimulatedHeading.ts",
+        "frontend/src/state/i18n/strings.ts"
+      ]
+    },
+    {
+      "id": "REQ-7",
+      "requirement": "If audio cannot start due to browser restrictions, the UI displays a non-blocking, English message indicating the user must interact to enable sound (Screen 3).",
+      "reason": "Compass audio is initialized automatically inside a useEffect with no user-gesture flow and only logs errors to console; there is no evidence of UI fallback messaging for compass audio start failures.",
+      "evidence": [
+        "frontend/src/hooks/useCompassSpatialAudio.ts",
+        "frontend/src/components/ritual-bios-time/screens/BoussoleScreen.tsx"
+      ]
+    },
+    {
+      "id": "REQ-7",
+      "requirement": "Provide mute/stop behavior consistent with the rest of the ritual experience (Screen 3 spatial audio).",
+      "reason": "BiosTimeRitualShell maintains an isMuted flag but does not provide it to BoussoleScreen/useCompassSpatialAudio; no evidence shows spatial audio being silenced when the ritual mute button is toggled.",
+      "evidence": [
+        "frontend/src/components/ritual-bios-time/BiosTimeRitualShell.tsx",
+        "frontend/src/hooks/useCompassSpatialAudio.ts",
+        "frontend/src/components/ritual-bios-time/screens/BoussoleScreen.tsx"
+      ]
+    },
+    {
+      "id": "REQ-8",
+      "requirement": "All new user-facing text introduced or modified for this build must be localized for both English and French.",
+      "reason": "Dashboard contains new/modified hardcoded English strings (e.g., error alert titles/messages and profile dialog text/labels) not routed through the i18n translator.",
+      "evidence": [
+        "frontend/src/pages/DashboardPage.tsx"
+      ]
+    },
+    {
+      "id": "REQ-10",
+      "requirement": "Add required static visual assets under frontend/public/assets/generated (glass texture overlay, particle sprite, sun/moon glyphs, tide/shield icons) and use them in the ritual UI.",
+      "reason": "The ritual screens reference generated asset paths (sun/moon glyphs, tide/shield icons), but the diff summary does not show the required image files being added under frontend/public/assets/generated (no public asset files are listed as added).",
+      "evidence": [
+        "frontend/src/components/ritual-bios-time/screens/SouffleScreen.tsx",
+        "frontend/src/components/ritual-bios-time/screens/BloomScreen.tsx"
+      ]
+    }
+  ],
+  "hallucinated_features": [],
+  "confidence": 0.74,
+  "changed_files": [
+    "frontend-file-summaries.txt",
+    "frontend/src/App.tsx",
+    "frontend/src/components/nav/PrimaryNav.tsx",
+    "frontend/src/components/ritual-bios-time/BiosTimeRitualShell.tsx",
+    "frontend/src/components/ritual-bios-time/RitualNotices.tsx",
+    "frontend/src/components/ritual-bios-time/screens/BloomScreen.tsx",
+    "frontend/src/components/ritual-bios-time/screens/BoussoleScreen.tsx",
+    "frontend/src/components/ritual-bios-time/screens/SouffleScreen.tsx",
+    "frontend/src/hooks/useCompassSpatialAudio.ts",
+    "frontend/src/hooks/useDayPhasePalette.ts",
+    "frontend/src/hooks/useLandscapeTrigger.ts",
+    "frontend/src/hooks/useLongPress.ts",
+    "frontend/src/hooks/useOrientationOrSimulatedHeading.ts",
+    "frontend/src/hooks/usePointerDragVector.ts",
+    "frontend/src/hooks/useRitualAudio.ts",
+    "frontend/src/hooks/useVibrationFeedback.ts",
+    "frontend/src/index.css",
+    "frontend/src/pages/BiosTimeRitualPage.tsx",
+    "frontend/src/pages/DashboardPage.tsx",
+    "frontend/src/state/i18n/I18nProvider.tsx",
+    "frontend/src/state/i18n/strings.ts",
+    "frontend/src/state/preferences/uiLanguage.ts",
+    "frontend/tailwind.config.js",
+    "project_state.json"
+  ]
+}

@@ -1,0 +1,239 @@
+{
+  "kind": "build_request",
+  "title": "BIOS-TIME: High-fidelity ‘Voile de Chair’ three-screen ritual UI (web simulation) + French localization with auto-detect and manual switch",
+  "priority": "normal",
+  "requirements": [
+    {
+      "id": "REQ-1",
+      "text": "Create a new, dedicated BIOS-TIME ritual experience with a three-screen flow (Souffle → Bloom → Boussole) implemented in the frontend and reachable via a clear navigation entry (new primary nav item and/or prominent entry point on the Dashboard).",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "Maximal",
+          "1 et 3"
+        ]
+      },
+      "acceptanceCriteria": [
+        "A user can start the BIOS-TIME ritual flow from the app UI without needing a deep link.",
+        "The flow includes exactly three distinct screens/states (Souffle, Bloom, Boussole) with transitions matching the described interactions (long-press and landscape/orientation trigger) and a way to return/exit back to the normal app shell."
+      ]
+    },
+    {
+      "id": "REQ-2",
+      "text": "Implement the ‘Deep Liquid Aura’ global look & feel for the BIOS-TIME ritual screens: an animated, living gradient background that continuously evolves and changes palette based on local time-of-day; subtle glassmorphism panels (frosted glass with light blur) and elegant thin typography with generous letter spacing. Apply this theme consistently across the three ritual screens without altering the existing parchment theme used by the rest of the app.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "Style : \"Deep Liquid Aura\" (Aura Liquide Profonde)",
+          "Design : Glassmorphisme Subtil & Typographie Élégante"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Within the BIOS-TIME ritual screens, the background visibly animates over time and the palette changes across day phases (dawn/day/dusk/night).",
+        "Ritual UI surfaces use frosted-glass styling (semi-transparent fill + blur) and a cohesive thin, airy typographic style.",
+        "Non-ritual pages (e.g., Dashboard/Settings/True Time) retain their current parchment styling."
+      ]
+    },
+    {
+      "id": "REQ-3",
+      "text": "Implement Screen 1 (‘Souffle / Celestial Oculus’): render a central organic energy sphere (‘Oculus’) that pulses at ~7.83 Hz; show minimal status text beneath it; render Sun and Moon indicators that slowly orbit around the Oculus. Add a long-press interaction on the Oculus that transitions into Screen 2.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "Écran 1 : Le Souffle (L'Oculus Céleste)",
+          "Une sphère d'énergie organique qui pulse lentement (7.83 Hz)",
+          "Un appui long sur l'Oculus déclenche le prochain écran."
+        ]
+      },
+      "acceptanceCriteria": [
+        "The Oculus is visually centered and continuously pulsing; the pulse rate is approximately 7.83 cycles per second (within reasonable browser timing tolerance).",
+        "Two distinct orbiting indicators (Sun = circle, Moon = crescent) rotate around the Oculus at a slow, steady pace.",
+        "A long-press gesture on the Oculus transitions to Screen 2; short taps do not trigger the transition.",
+        "A single-line status text is displayed under the Oculus and updates based on the current ritual state (at minimum: an ‘aligned / recovery / alert’ style state)."
+      ]
+    },
+    {
+      "id": "REQ-4",
+      "text": "Implement Screen 2 (‘Bloom / Data Blossom’): transition animation from Screen 1 where the Oculus ‘sinks’ and becomes a frosted glass receptacle; spawn three orbiting ‘petal’ panels (Sky/Lunar influence, Body/Biometrics, Earth/Environment). Implement a drag interaction that lets the user pull toward a petal; releasing closes the bloom and re-absorbs petals into the Oculus.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "Écran 2 : Le Bloom (L'Éclosion des Données)",
+          "La Métamorphose",
+          "Les Pétales Orbitaux (3)",
+          "Glisser son doigt vers un pétale",
+          "Relâcher le doigt fait \"aspirer\" les pétales vers l'Oculus"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Entering Screen 2 from Screen 1 plays a clear metamorphosis animation (Oculus transforms into a glass-like receptacle).",
+        "Three distinct petal panels orbit or hover around the center and display readable titles/values (in the currently selected language).",
+        "Dragging toward a petal produces an obvious interactive response (e.g., petal highlight/selection and parameter change).",
+        "On release, petals animate inward (‘absorb’) and the UI returns to the resting state (either Screen 2 resting or back to Screen 1, as designed), with no stuck/half-open states."
+      ]
+    },
+    {
+      "id": "REQ-5",
+      "text": "Add web-simulated sensory feedback for Screen 2: (a) an audible hang-drum-like harmonic pad while the bloom is open and (b) simulated ‘haptics’ using the Vibration API when available, with graceful fallback when not supported. Ensure there is an obvious on-screen control to mute/stop ritual audio.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "Audio : Nappe sonore harmonique de hang drum.",
+          "Haptique : Vibration continue à 7.83 Hz pendant l'ouverture ..."
+        ]
+      },
+      "acceptanceCriteria": [
+        "When Screen 2 opens, audio starts (subject to browser gesture/autoplay rules) and stops when the bloom closes.",
+        "If `navigator.vibrate` is supported, the app uses vibration patterns on open/close; if not supported, the app does not error and still provides visual feedback.",
+        "The ritual experience includes a visible mute/stop control that reliably silences ritual audio."
+      ]
+    },
+    {
+      "id": "REQ-6",
+      "text": "Implement Screen 3 (‘Boussole Sonore / Alignment Ritual’) triggered by landscape orientation: when the device is rotated to landscape (or a manual ‘Enter Compass Mode’ fallback control is used), render a ‘transparent augmented’ mode with a luminous ring (stretched Oculus), a particle ‘ray of life’ pointing based on simulated device direction, and a ‘sweet spot’ lock effect when aligned within a reasonable tolerance.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "Écran 3 : La Boussole Sonore",
+          "déclenché en basculant le téléphone à l'horizontale",
+          "Le Rayon de Vie ... pointe dans la direction du téléphone",
+          "Le \"Sweet Spot\" (Verrouillage)"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Landscape orientation triggers Screen 3 automatically on compatible devices/browsers; a visible manual fallback exists for desktop or unsupported orientation APIs.",
+        "Screen 3 visually differs from Screens 1/2 with a ‘more transparent’ UI and clearly shows the ring and ray visuals.",
+        "Alignment is computed using device orientation when available; otherwise a simulated control (e.g., on-screen dial) drives the direction.",
+        "When alignment enters a tolerance window (‘sweet spot’), a clear lock state occurs (e.g., intensified white pillar/ray + distinct animation) and unlocks when leaving the window."
+      ]
+    },
+    {
+      "id": "REQ-7",
+      "text": "Add web-simulated ‘3D audio’ feedback for Screen 3 using Web Audio stereo panning (no external services): as the user approaches alignment, the sound becomes clearer/stronger and pans toward center; when locked, the sound becomes centered and stable. Provide mute/stop behavior consistent with the rest of the ritual experience.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "Audio 3D ... spatialisé",
+          "Le son se verrouille au centre des deux oreilles"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Audio intensity/clarity changes continuously as alignment changes, and stereo balance shifts toward center when near alignment.",
+        "On lock, audio becomes centered (no left/right drift) and remains stable until unlock.",
+        "If audio cannot start due to browser restrictions, the UI displays a non-blocking, English message indicating the user must interact to enable sound."
+      ]
+    },
+    {
+      "id": "REQ-8",
+      "text": "Implement French localization across the BIOS-TIME ritual experience and ensure the app supports both (a) automatic language detection on first visit and (b) manual language switching via Settings. All user-facing text introduced or modified for this build must have English and French translations, and the default language should be chosen by detection unless a saved preference exists.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "détection automatique du français et ... changer la langue manuellement",
+          "Use English for any user-facing text in the build request."
+        ]
+      },
+      "acceptanceCriteria": [
+        "If no UI language is saved, the app selects French when the browser language indicates French (e.g., `fr`, `fr-FR`) and otherwise selects English.",
+        "If a UI language is saved in localStorage, it overrides detection on subsequent loads.",
+        "All new ritual UI strings are present in both `en` and `fr` dictionaries and render correctly when switching languages.",
+        "Settings language selector continues to work and updates the ritual screens immediately."
+      ]
+    },
+    {
+      "id": "REQ-9",
+      "text": "Ensure the BIOS-TIME ritual screens are implemented with robust error handling so that failures in advanced APIs (audio context, device orientation, vibration) degrade gracefully and never crash the app; show non-blocking, user-readable fallback messaging in English (and translated to French) when an API is unavailable.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "simulation web pour les interactions complexes (haptique, gyroscope, audio 3D)"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Disabling audio permissions, blocking autoplay, or missing orientation/vibration APIs does not crash the app.",
+        "When an API is missing/blocked, the UI shows a translated, non-blocking notice and provides an alternative interaction path (e.g., manual compass control, ‘Tap to enable audio’)."
+      ]
+    },
+    {
+      "id": "REQ-10",
+      "text": "Add required static visual assets for the ritual theme (icons/textures) and render them from `frontend/public/assets/generated` (no backend image routing). Use these assets in the ritual UI where appropriate (e.g., glass texture overlay, stylized sun/moon glyphs, petal icons).",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "Une légère texture de fractal peut orner ces surfaces.",
+          "Deux astres minimalistes (cercle pour le Soleil, croissant pour la Lune)",
+          "Icône de marée stylisée.",
+          "Icône d'un bouclier avec des fissures."
+        ]
+      },
+      "acceptanceCriteria": [
+        "Generated assets exist under `frontend/public/assets/generated` and are referenced directly by the frontend.",
+        "Ritual UI uses the generated assets visually (not just included unused).",
+        "The rest of the app continues to load its existing background asset without regression."
+      ]
+    }
+  ],
+  "constraints": [
+    "Backend must remain a single Motoko actor in backend/main.mo; do not introduce additional backend services.",
+    "Do not edit files under frontend/src/components/ui or any other frontend immutable paths listed in SYSTEM_CONTEXT; compose existing UI components instead.",
+    "Do not remove or break existing routes/pages (Dashboard, True Time, Chronicle, Rituals, Dreams, Settings, Ethics).",
+    "All new user-facing text must be localized for both English and French; language detection must not override an explicit saved user preference."
+  ],
+  "nonGoals": [
+    "Implementing real biometric sensing, real Schumann resonance measurement, or medical-grade stress detection.",
+    "Integrating Swiss Ephemeris or other external astronomy libraries/services; use simplified/placeholder calculations where needed for the prototype.",
+    "Native mobile haptics, true spatial audio (HRTF), or app-store packaging; this is a web simulation prototype.",
+    "Replacing the entire app’s existing parchment theme globally (the Deep Liquid Aura theme is scoped to the ritual experience)."
+  ],
+  "imageRequirements": {
+    "required": [
+      "Seamless fractal frosted-glass texture overlay (glass-fractal-overlay.dim_1024x1024.png)",
+      "Soft luminous particle sprite (particle-sprite.dim_256x256.png)",
+      "Minimal sun glyph icon (sun-glyph.dim_256x256.png)",
+      "Minimal moon crescent glyph icon (moon-glyph.dim_256x256.png)",
+      "Stylized tide icon (tide-icon.dim_256x256.png)",
+      "Cracked shield icon (shield-cracked-icon.dim_256x256.png)"
+    ],
+    "edits": []
+  },
+  "userProfileUpdate": {
+    "goalsToAdd": [],
+    "goalsToRemove": [],
+    "preferencesToAdd": [],
+    "preferencesToRemove": [],
+    "miscToAdd": [],
+    "miscToRemove": [],
+    "fieldsToSet": {},
+    "fieldsToDelete": []
+  }
+}

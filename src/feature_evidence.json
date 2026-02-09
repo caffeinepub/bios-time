@@ -1,0 +1,222 @@
+{
+  "kind": "feature_evidence_report",
+  "features": [
+    {
+      "featureId": "feature-create-a-new-dedicated-bios-time-ritual-experience-with-a-three-screen-flow-souffle-bloom-boussole-implemented-in-the-frontend-and-reachable-via-a-clear-navigation-entry-new-primary-nav-item-and-or-prominent-entry-point-on-the-dashboard",
+      "featureTitle": "Create a new, dedicated BIOS-TIME ritual experience with a three-screen flow (Souffle → Bloom → Boussole) implemented in the frontend and reachable via a clear navigation entry (new primary nav item and/or prominent entry point on the Dashboard).",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/components/nav/PrimaryNav.tsx",
+        "frontend/src/components/ritual-bios-time/BiosTimeRitualShell.tsx",
+        "frontend/src/pages/BiosTimeRitualPage.tsx",
+        "frontend/src/pages/DashboardPage.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-implement-the-deep-liquid-aura-global-look-feel-for-the-bios-time-ritual-screens-an-animated-living-gradient-background-that-continuously-evolves-and-changes-palette-based-on-local-time-of-day-subtle-glassmorphism-panels-frosted-glass-with-light-blur-and-elegant-thin-typography-with-generous-letter-spacing-apply-this-theme-consistently-across-the-three-ritual-screens-without-altering-the-existing-parchment-theme-used-by-the-rest-of-the-app",
+      "featureTitle": "Implement the ‘Deep Liquid Aura’ global look & feel for the BIOS-TIME ritual screens: an animated, living gradient background that continuously evolves and changes palette based on local time-of-day; subtle glassmorphism panels (frosted glass with light blur) and elegant thin typography with generous letter spacing. Apply this theme consistently across the three ritual screens without altering the existing parchment theme used by the rest of the app.",
+      "files": [
+        "frontend/src/components/ritual-bios-time/BiosTimeRitualShell.tsx",
+        "frontend/src/hooks/useDayPhasePalette.ts",
+        "frontend/src/index.css",
+        "frontend/tailwind.config.js"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-2"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-implement-screen-1-souffle-celestial-oculus-render-a-central-organic-energy-sphere-oculus-that-pulses-at-7-83-hz-show-minimal-status-text-beneath-it-render-sun-and-moon-indicators-that-slowly-orbit-around-the-oculus-add-a-long-press-interaction-on-the-oculus-that-transitions-into-screen-2",
+      "featureTitle": "Implement Screen 1 (‘Souffle / Celestial Oculus’): render a central organic energy sphere (‘Oculus’) that pulses at ~7.83 Hz; show minimal status text beneath it; render Sun and Moon indicators that slowly orbit around the Oculus. Add a long-press interaction on the Oculus that transitions into Screen 2.",
+      "files": [
+        "frontend/src/components/ritual-bios-time/screens/SouffleScreen.tsx",
+        "frontend/src/hooks/useLongPress.ts",
+        "frontend/src/pages/BiosTimeRitualPage.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-3"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-implement-screen-2-bloom-data-blossom-transition-animation-from-screen-1-where-the-oculus-sinks-and-becomes-a-frosted-glass-receptacle-spawn-three-orbiting-petal-panels-sky-lunar-influence-body-biometrics-earth-environment-implement-a-drag-interaction-that-lets-the-user-pull-toward-a-petal-releasing-closes-the-bloom-and-re-absorbs-petals-into-the-oculus",
+      "featureTitle": "Implement Screen 2 (‘Bloom / Data Blossom’): transition animation from Screen 1 where the Oculus ‘sinks’ and becomes a frosted glass receptacle; spawn three orbiting ‘petal’ panels (Sky/Lunar influence, Body/Biometrics, Earth/Environment). Implement a drag interaction that lets the user pull toward a petal; releasing closes the bloom and re-absorbs petals into the Oculus.",
+      "files": [
+        "frontend/src/components/ritual-bios-time/screens/BloomScreen.tsx",
+        "frontend/src/hooks/usePointerDragVector.ts",
+        "frontend/src/pages/BiosTimeRitualPage.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-4"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-add-web-simulated-sensory-feedback-for-screen-2-a-an-audible-hang-drum-like-harmonic-pad-while-the-bloom-is-open-and-b-simulated-haptics-using-the-vibration-api-when-available-with-graceful-fallback-when-not-supported-ensure-there-is-an-obvious-on-screen-control-to-mute-stop-ritual-audio",
+      "featureTitle": "Add web-simulated sensory feedback for Screen 2: (a) an audible hang-drum-like harmonic pad while the bloom is open and (b) simulated ‘haptics’ using the Vibration API when available, with graceful fallback when not supported. Ensure there is an obvious on-screen control to mute/stop ritual audio.",
+      "files": [
+        "frontend/src/components/ritual-bios-time/BiosTimeRitualShell.tsx",
+        "frontend/src/components/ritual-bios-time/screens/BloomScreen.tsx",
+        "frontend/src/hooks/useRitualAudio.ts",
+        "frontend/src/hooks/useVibrationFeedback.ts"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-5"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-implement-screen-3-boussole-sonore-alignment-ritual-triggered-by-landscape-orientation-when-the-device-is-rotated-to-landscape-or-a-manual-enter-compass-mode-fallback-control-is-used-render-a-transparent-augmented-mode-with-a-luminous-ring-stretched-oculus-a-particle-ray-of-life-pointing-based-on-simulated-device-direction-and-a-sweet-spot-lock-effect-when-aligned-within-a-reasonable-tolerance",
+      "featureTitle": "Implement Screen 3 (‘Boussole Sonore / Alignment Ritual’) triggered by landscape orientation: when the device is rotated to landscape (or a manual ‘Enter Compass Mode’ fallback control is used), render a ‘transparent augmented’ mode with a luminous ring (stretched Oculus), a particle ‘ray of life’ pointing based on simulated device direction, and a ‘sweet spot’ lock effect when aligned within a reasonable tolerance.",
+      "files": [
+        "frontend/src/components/ritual-bios-time/screens/BoussoleScreen.tsx",
+        "frontend/src/hooks/useLandscapeTrigger.ts",
+        "frontend/src/hooks/useOrientationOrSimulatedHeading.ts",
+        "frontend/src/pages/BiosTimeRitualPage.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-6"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-add-web-simulated-3d-audio-feedback-for-screen-3-using-web-audio-stereo-panning-no-external-services-as-the-user-approaches-alignment-the-sound-becomes-clearer-stronger-and-pans-toward-center-when-locked-the-sound-becomes-centered-and-stable-provide-mute-stop-behavior-consistent-with-the-rest-of-the-ritual-experience",
+      "featureTitle": "Add web-simulated ‘3D audio’ feedback for Screen 3 using Web Audio stereo panning (no external services): as the user approaches alignment, the sound becomes clearer/stronger and pans toward center; when locked, the sound becomes centered and stable. Provide mute/stop behavior consistent with the rest of the ritual experience.",
+      "files": [
+        "frontend/src/components/ritual-bios-time/BiosTimeRitualShell.tsx",
+        "frontend/src/components/ritual-bios-time/screens/BoussoleScreen.tsx",
+        "frontend/src/hooks/useCompassSpatialAudio.ts"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-7"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-implement-french-localization-across-the-bios-time-ritual-experience-and-ensure-the-app-supports-both-a-automatic-language-detection-on-first-visit-and-b-manual-language-switching-via-settings-all-user-facing-text-introduced-or-modified-for-this-build-must-have-english-and-french-translations-and-the-default-language-should-be-chosen-by-detection-unless-a-saved-preference-exists",
+      "featureTitle": "Implement French localization across the BIOS-TIME ritual experience and ensure the app supports both (a) automatic language detection on first visit and (b) manual language switching via Settings. All user-facing text introduced or modified for this build must have English and French translations, and the default language should be chosen by detection unless a saved preference exists.",
+      "files": [
+        "frontend/src/components/nav/PrimaryNav.tsx",
+        "frontend/src/state/i18n/I18nProvider.tsx",
+        "frontend/src/state/i18n/strings.ts",
+        "frontend/src/state/preferences/uiLanguage.ts"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-8"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-ensure-the-bios-time-ritual-screens-are-implemented-with-robust-error-handling-so-that-failures-in-advanced-apis-audio-context-device-orientation-vibration-degrade-gracefully-and-never-crash-the-app-show-non-blocking-user-readable-fallback-messaging-in-english-and-translated-to-french-when-an-api-is-unavailable",
+      "featureTitle": "Ensure the BIOS-TIME ritual screens are implemented with robust error handling so that failures in advanced APIs (audio context, device orientation, vibration) degrade gracefully and never crash the app; show non-blocking, user-readable fallback messaging in English (and translated to French) when an API is unavailable.",
+      "files": [
+        "frontend/src/components/ritual-bios-time/BiosTimeRitualShell.tsx",
+        "frontend/src/components/ritual-bios-time/RitualNotices.tsx",
+        "frontend/src/components/ritual-bios-time/screens/BloomScreen.tsx",
+        "frontend/src/components/ritual-bios-time/screens/BoussoleScreen.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-9"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-add-required-static-visual-assets-for-the-ritual-theme-icons-textures-and-render-them-from-frontend-public-assets-generated-no-backend-image-routing-use-these-assets-in-the-ritual-ui-where-appropriate-e-g-glass-texture-overlay-stylized-sun-moon-glyphs-petal-icons",
+      "featureTitle": "Add required static visual assets for the ritual theme (icons/textures) and render them from `frontend/public/assets/generated` (no backend image routing). Use these assets in the ritual UI where appropriate (e.g., glass texture overlay, stylized sun/moon glyphs, petal icons).",
+      "files": [
+        "frontend/src/components/ritual-bios-time/screens/BloomScreen.tsx",
+        "frontend/src/components/ritual-bios-time/screens/BoussoleScreen.tsx",
+        "frontend/src/components/ritual-bios-time/screens/SouffleScreen.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-10"
+      ],
+      "confidence": "high"
+    }
+  ]
+}
